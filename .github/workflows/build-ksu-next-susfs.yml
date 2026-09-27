@@ -383,14 +383,14 @@ jobs:
           sed -i 's/device.name1=.*/device.name1=instantnoodle/g' anykernel.sh
           sed -i 's|block=.*|block=/dev/block/bootdevice/by-name/boot;|g' anykernel.sh
           sed -i 's/is_slot_device=.*/is_slot_device=1;/g' anykernel.sh
-          ZIP_NAME="KSU-SUSFS_OnePlus8Pro_$(date +%Y%m%d).zip"
+          ZIP_NAME="KSU-SUSFS_OnePlus8_$(date +%Y%m%d).zip"
           zip -r9 "$GITHUB_WORKSPACE/$ZIP_NAME" * -x .git README.md *placeholder
           echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_ENV
 
       - name: Create boot.img
         run: |
           cd kernel
-          BOOT_IMG="KSU-SUSFS_boot_OnePlus8Pro_$(date +%Y%m%d).img"
+          BOOT_IMG="KSU-SUSFS_boot_OnePlus8_$(date +%Y%m%d).img"
           lz4 -l -12 --favor-decSpeed "$GITHUB_WORKSPACE/lineage-os/ramdisk.cpio" ramdisk.cpio.lz4
           python3 $GITHUB_WORKSPACE/mkbootimg/mkbootimg.py \
             --kernel out/arch/arm64/boot/Image \
@@ -428,7 +428,7 @@ jobs:
           tag_name: ksu-susfs-${{ github.run_number }}
           name: KernelSU + SUSFS Build ${{ github.run_number }}
           body: |
-            ## KernelSU + SUSFS for OnePlus 8 Pro (LineageOS 23)
+            ## KernelSU + SUSFS for OnePlus 8 (LineageOS 23)
 
             This build uses:
             - [KernelSU](https://github.com/tiann/KernelSU) (original repo for SUSFS compatibility)
